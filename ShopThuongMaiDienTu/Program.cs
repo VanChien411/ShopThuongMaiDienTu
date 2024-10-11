@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using ShopThuongMaiDienTu.Data;
+using ShopThuongMaiDienTu.Models;
+using System.Data;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ShopThuongMaiDienTuContext>(
+    options =>
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Shop"));
+    });
 
 var app = builder.Build();
 
