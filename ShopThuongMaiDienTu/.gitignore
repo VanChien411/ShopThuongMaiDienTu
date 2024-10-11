@@ -1,0 +1,48 @@
+﻿# Các tệp hệ thống
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+.vs/
+.vscode/
+*.user
+*.rsuser
+*.suo
+*.cache
+*.log
+
+# Tệp cấu hình IDE
+*.csproj.user
+*.csproj.suo
+*.sln.ide
+
+# Tệp biên dịch
+*.exe
+*.dll
+*.pdb
+*.obj
+*.app
+*.ipa
+*.apk
+*.msi
+*.nuspec
+*.nupkg
+
+# Các tệp của .NET
+*.dbmdl
+*.jfm
+*.mdf
+*.ldf
+*.ndf
+
+# Thư mục của các gói NuGet
+packages/
+*.nupkg
+*.snupkg
+
+# Tệp của hệ thống kiểm thử
+TestResults/
+
+# Thư mục tạm thời
+bin/
+obj/
