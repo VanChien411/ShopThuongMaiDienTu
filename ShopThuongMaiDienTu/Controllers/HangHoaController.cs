@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ShopThuongMaiDienTu.Data;
 using ShopThuongMaiDienTu.ViewModels;
@@ -55,6 +56,29 @@ namespace ShopThuongMaiDienTu.Controllers
                 
             });
             return View("Index",result);
+        }
+        public IActionResult Detail(int id)
+        {
+            var data = _context.HangHoas.Include(o => o.MaLoaiNavigation).SingleOrDefault(x => x.MaHh == id);
+            if (data == null)
+            {
+                TempData["Message"] = $"Không tìm thấy sản phẩm {id}";
+                return Redirect("/404");
+            }
+
+            var result = new ChiTietHangHoaVM
+            {
+                MaHangHoa = data.MaHh,
+                TenHangHoa = data.TenHh,
+                DonGia = data.DonGia ?? 0,
+                ChiTiet = data.MoTa ?? string.Empty,
+                DiemDanhGia = 4,
+                Hinh = data.Hinh ?? string.Empty,
+                MoTaNgan = data.MoTaDonVi ?? string.Empty,
+                TenLoai = data.MaLoaiNavigation.TenLoai,
+                SoLuongTon = 10,
+            };
+            return View(result);
         }
     }
 }
