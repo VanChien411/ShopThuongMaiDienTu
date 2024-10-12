@@ -46,3 +46,5 @@ TestResults/
 # Thư mục tạm thời
 bin/
 obj/
+
+wwwroot/Hinh
