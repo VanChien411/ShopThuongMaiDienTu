@@ -15,6 +15,7 @@ namespace ShopThuongMaiDienTu.Controllers
 
         public IActionResult Index()
         {
+            return Redirect("/HangHoa");
             return View();
         }
         [Route("/404")]
