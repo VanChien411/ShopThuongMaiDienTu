@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ShopThuongMaiDienTu.Data;
 using ShopThuongMaiDienTu.ViewModels;
 
@@ -29,6 +30,31 @@ namespace ShopThuongMaiDienTu.Controllers
                 TenLoai = x.MaLoaiNavigation.TenLoai
             });
             return View(result);
+        }
+
+        public IActionResult Search(string? Name)
+        {
+            var hangHoas = _context.HangHoas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(Name))
+            {
+                hangHoas = hangHoas.Where(x => x.TenHh.ToLower().Contains(Name.ToLower()));
+            }
+
+            // Lưu giá trị của Name vào ViewBag
+            ViewBag.SearchName = Name;
+
+            var result = hangHoas.Select(x => new HangHoaVM
+            {
+                MaHangHoa = x.MaHh,
+                TenHangHoa = x.TenHh,
+                DonGia = x.DonGia ?? 0,
+                Hinh = x.Hinh ?? "",
+                MoTaNgan = x.MoTaDonVi ?? "",
+                TenLoai = x.MaLoaiNavigation.TenLoai,
+                
+            });
+            return View("Index",result);
         }
     }
 }
