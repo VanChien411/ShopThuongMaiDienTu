@@ -13,7 +13,15 @@ builder.Services.AddDbContext<ShopThuongMaiDienTuContext>(
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("Shop"));
     });
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(25);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 
+}
+);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,7 +36,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapControllerRoute(
