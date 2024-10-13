@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ShopThuongMaiDienTu.Data;
+using ShopThuongMaiDienTu.Helpers;
 using ShopThuongMaiDienTu.Models;
 using System.Data;
 
@@ -22,6 +23,9 @@ builder.Services.AddSession(options =>
 
 }
 );
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

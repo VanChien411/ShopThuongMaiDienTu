@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using ShopThuongMaiDienTu.Data;
+using ShopThuongMaiDienTu.Helpers;
+using ShopThuongMaiDienTu.Models;
 using ShopThuongMaiDienTu.ViewModels;
 
 namespace ShopThuongMaiDienTu.Controllers
@@ -7,9 +10,11 @@ namespace ShopThuongMaiDienTu.Controllers
     public class KhachHangController : Controller
     {
         private readonly ShopThuongMaiDienTuContext _context;
+        private readonly IMapper _mapper;
 
-        public KhachHangController(ShopThuongMaiDienTuContext context) {
+        public KhachHangController(ShopThuongMaiDienTuContext context, IMapper mapper) {
             _context = context;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -25,7 +30,9 @@ namespace ShopThuongMaiDienTu.Controllers
         {
             if (ModelState.IsValid)
             {
-                var khachHang = model;
+                var khachHang = _mapper.Map<KhachHang>(model);
+                khachHang.RandomKey = MyUtil.GenerateRandomKey();
+
             }
             return View();
         }
