@@ -26,13 +26,32 @@ namespace ShopThuongMaiDienTu.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult DangKy(RegisterVM model)
+        public IActionResult DangKy(RegisterVM model, IFormFile Hinh)
         {
+
             if (ModelState.IsValid)
             {
-                var khachHang = _mapper.Map<KhachHang>(model);
-                khachHang.RandomKey = MyUtil.GenerateRandomKey();
+                try
+                {
+                    var khachHang = _mapper.Map<KhachHang>(model);
+                    khachHang.RandomKey = MyUtil.GenerateRandomKey();
+                    khachHang.MatKhau = model.MatKhau.ToMd5Hash(khachHang.RandomKey);
+                    khachHang.HieuLuc = true;
+                    khachHang.VaiTro = 0;
 
+                    if (Hinh != null)
+                    {
+                        khachHang.Hinh = MyUtil.UploadHinh(Hinh, "KhachHang");
+                    }
+
+                    _context.Add(khachHang);
+                    _context.SaveChanges();
+                    return RedirectToAction("Index", "HangHoa");
+                }
+                catch (Exception ex) { 
+
+                }
+             
             }
             return View();
         }
