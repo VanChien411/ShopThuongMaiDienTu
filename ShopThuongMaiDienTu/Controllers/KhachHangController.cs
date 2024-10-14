@@ -55,8 +55,10 @@ namespace ShopThuongMaiDienTu.Controllers
             }
             return View();
         }
-        public IActionResult DangNhap()
+        [HttpGet]
+        public IActionResult DangNhap(string? ReturnUrl)
         {
+            ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
     }
