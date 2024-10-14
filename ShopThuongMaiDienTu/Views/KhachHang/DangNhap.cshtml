@@ -16,7 +16,7 @@
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Đăng nhập tài khoản</p>
 
-                                <form asp-action="DangNhap" asp-controller="KhachHang" enctype="multipart/form-data" class="mx-1 mx-md-4">
+                                <form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl" asp-controller="KhachHang"  enctype="multipart/form-data" class="mx-1 mx-md-4">
                                    <div class="text-danger" asp-validation-summary="All"></div>
                                     <div class="text-danger mx-5">
                                         @Html.ValidationMessageFor(model => model.UserName)

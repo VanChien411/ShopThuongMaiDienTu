@@ -26,7 +26,6 @@ namespace ShopThuongMaiDienTu.ViewModels
         public string? DienThoai { get; set; }
         [EmailAddress(ErrorMessage ="Chưa đứng định dạng email")]
         public string Email { get; set; }
-
         public string? Hinh { get; set; }
 
    
