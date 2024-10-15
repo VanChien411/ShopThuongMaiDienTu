@@ -54,6 +54,40 @@ namespace ShopThuongMaiDienTu.Controllers
 
             return RedirectToAction("index");
         }
+        public IActionResult ChangeToCart(int id, int quantity = 1)
+        {
+            var gioHang = Cart;
+            var item = gioHang.SingleOrDefault(p => p.MaHangHoa == id);
+            if (item == null)
+            {
+                var hangHoa = _context.HangHoas.SingleOrDefault(x => x.MaHh == id);
+                if (hangHoa == null)
+                {
+                    TempData["Message"] = $"Khong tim thay {id}";
+                    return Redirect("/404");
+
+                }
+                item = new CartItem
+                {
+                    MaHangHoa = hangHoa.MaHh,
+                    TenHangHoa = hangHoa.TenHh,
+                    DonGia = hangHoa.DonGia ?? 0,
+                    Hinh = hangHoa.Hinh ?? string.Empty,
+                    SoLuong = quantity
+                };
+                gioHang.Add(item);
+
+            }
+            else
+            {
+                item.SoLuong = quantity;
+
+            }
+            HttpContext.Session.Set(MySetting.CART_KEY, gioHang);
+
+            return RedirectToAction("index");
+
+        }
         public IActionResult RemoveCart(int id)
         {
             var gioHang = Cart;
