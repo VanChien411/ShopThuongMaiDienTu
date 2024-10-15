@@ -108,7 +108,7 @@ namespace ShopThuongMaiDienTu.Controllers
             {
                 return Redirect("/");
             }
-            return View();
+            return View(Cart);
         }
     }
 }
