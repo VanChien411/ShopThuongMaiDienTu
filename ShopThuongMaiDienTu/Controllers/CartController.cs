@@ -2,6 +2,7 @@
 using ShopThuongMaiDienTu.Data;
 using ShopThuongMaiDienTu.ViewModels;
 using ShopThuongMaiDienTu.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ShopThuongMaiDienTu.Controllers
 {
@@ -99,6 +100,15 @@ namespace ShopThuongMaiDienTu.Controllers
             }
 
             return RedirectToAction("index");
+        }
+        [Authorize]
+        public IActionResult CheckOut()
+        {
+           if(Cart.Count == 0)
+            {
+                return Redirect("/");
+            }
+            return View();
         }
     }
 }
