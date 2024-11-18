@@ -14,7 +14,7 @@ namespace ShopThuongMaiDienTu.Controllers
         public HangHoaController(ShopThuongMaiDienTuContext context) { 
             _context = context;
         }
-        public IActionResult Index(int? loai)
+        public IActionResult Index(int? loai, int page = 1, int pageSize = 6)
         {
             var hangHoas = _context.HangHoas.AsQueryable();
 
@@ -31,7 +31,19 @@ namespace ShopThuongMaiDienTu.Controllers
                 MoTaNgan = x.MoTaDonVi ?? "",
                 TenLoai = x.MaLoaiNavigation.TenLoai
             });
-            return View(result);
+            // Tính tổng số trang
+            int totalItems = result.Count();
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            // Lấy dữ liệu của trang hiện tại
+            var itemsOnPage = result
+                .Skip((page - 1) * pageSize) // Bỏ qua các phần tử của các trang trước
+                .Take(pageSize)             // Lấy số lượng phần tử của trang hiện tại
+                .ToList();
+
+            // Truyền dữ liệu đến View
+            ViewBag.TotalPages = totalPages;
+            ViewBag.CurrentPage = page;
+            return View(itemsOnPage);
         }
 
         public IActionResult Search(string? Name)
